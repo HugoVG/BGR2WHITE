@@ -140,30 +140,32 @@ def allpicsexp():
         
 filearray = []
 #Loop
-i = 0
 #TODO frame voor SNELHEIDDDDDDDD
 
 
+i = 0
 def dysWindow():
     def refreshimg():
-    
-        load = Image.open("./input/" + filearray[1])
+        global i
+        load = Image.open("./input/" + filearray[i])
         render = ImageTk.PhotoImage(load)
-        img.configure(image=render)
+        img = tk.Label(root, image=render)
+        img.image = render
+        img.place(relx=0.05, rely=0.25, relwidth=0.9 )
+        i = i + 1
+        print(i)
 
 
     root = tk.Toplevel(app)
     root.title("keuzemenu")
     #laad de foto in
-   
+
     for geladenfile in os.listdir("./input"):
         filearray.append(geladenfile)
     load = Image.open("./input/" + filearray[0])
     render = ImageTk.PhotoImage(load)
-
     canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH, bg="#80c1ff")
     canvas.pack()
-
     frame = tk.Frame(root, bg="#80c1ff",bd=5, cursor="arrow")
     frame.place(relx=0.5,rely=0.1,relwidth=0.75,relheight=0.1,anchor="n")
 
@@ -174,12 +176,10 @@ def dysWindow():
     but1.place(relx=0.7,relheight=1,relwidth=0.3)
     but2 = tk.Button(frame, text="MASK",font=1,command=lambda: bgr2white(geladenfile))
     but2.place(relx=0.4,relheight=1,relwidth=0.3)
-    but3 = tk.Button(frame, text="Refresg",font=1,command=refreshimg)
+    but3 = tk.Button(frame, text="Refresg",font=1,command=lambda: refreshimg())
     but3.place(relx=0.1,relheight=1,relwidth=0.3)
 
-    img = tk.Label(root, image=render)
-    img.image = render
-    img.place(relx=0.05, rely=0.25, relwidth=0.9 )
+
 
 
 
